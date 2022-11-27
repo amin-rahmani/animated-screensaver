@@ -16,6 +16,7 @@ function randomRGB() {
 }
 
 class Ball {
+    // velX and velY is how fast the ball is moving
     constructor(x, y, velX, velY, color, size) {
         this.x = x;
         this.y = y;
@@ -31,4 +32,44 @@ class Ball {
         ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
         ctx.fill();
     }
+
+    update(){
+        /*hits left of screen*/
+        if((this.x + this.size) >= width){
+            this.velX = -(this.velX)
+        }
+
+        if((this.x - this.size) <= 0){
+            this.velX = -(this.velX)
+        }
+
+        if((this.y + this.size) >= height){
+            this.velY = -(this.velY)
+        }
+
+        if((this.y - this.size) <= 0){
+            this.velX = -(this.velX)
+        }
+
+        this.x += this.velX;
+        this.y += this.velY;
+    }
+}
+
+const balls = []
+
+while (balls.lenght < 10){
+    const size = random(10,20);
+    const ball = new Ball(
+        //we gonna add size to zero becuase the ball start in the screen not outside it that is exactly for width too
+        random(0 + size,width - size), //x-coordinate
+        random(0 + size,height - size),// y-cordinate
+        // now we want to determine the speed and becarfull not start with 0 cause it makes it no move at all
+        random(1,4),// vel-x 
+        random(1,4),//vel-Y
+        randomRGB(),//Assign color
+        size
+    )
+    
+    balls.push(ball)
 }
