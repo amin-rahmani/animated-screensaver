@@ -4,7 +4,7 @@ const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
 
 const width = canvas.width = window.innerWidth;
-const height = canvas.height = window.innerHeight
+const height = canvas.height = window.innerHeight;
 
 // function to generate random number
 function random(min, max) {
@@ -12,7 +12,7 @@ function random(min, max) {
 }
 // function to generate a random RGB color
 function randomRGB() {
-    return `rgb(${random(0, 255)},${random(0, 255)})`
+    return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`
 }
 
 class Ball {
@@ -33,22 +33,22 @@ class Ball {
         ctx.fill();
     }
 
-    update(){
+    update() {
         /*hits left of screen*/
-        if((this.x + this.size) >= width){
+        if ((this.x + this.size) >= width) {
             this.velX = -(this.velX)
         }
 
-        if((this.x - this.size) <= 0){
+        if ((this.x - this.size) <= 0) {
             this.velX = -(this.velX)
         }
 
-        if((this.y + this.size) >= height){
+        if ((this.y + this.size) >= height) {
             this.velY = -(this.velY)
         }
 
-        if((this.y - this.size) <= 0){
-            this.velX = -(this.velX)
+        if ((this.y - this.size) <= 0) {
+            this.velY = -(this.velY)
         }
 
         this.x += this.velX;
@@ -58,18 +58,31 @@ class Ball {
 
 const balls = []
 
-while (balls.lenght < 10){
-    const size = random(10,20);
+while (balls.length < 10) {
+    const size = random(10, 20);
     const ball = new Ball(
         //we gonna add size to zero becuase the ball start in the screen not outside it that is exactly for width too
-        random(0 + size,width - size), //x-coordinate
-        random(0 + size,height - size),// y-cordinate
+        random(0 + size, width - size), //x-coordinate
+        random(0 + size, height - size),// y-cordinate
         // now we want to determine the speed and becarfull not start with 0 cause it makes it no move at all
-        random(1,4),// vel-x 
-        random(1,4),//vel-Y
+        random(1, 4),// vel-x 
+        random(1, 4),//vel-Y
         randomRGB(),//Assign color
         size
     )
-    
+
     balls.push(ball)
 }
+
+function loop() {
+    ctx.fillStyle = 'rgba(0,0,0,0.3)'
+    ctx.fillRect(0, 0, width, height)
+    for (let ball of balls) {
+        ball.draw()
+        ball.update()
+    }
+
+    requestAnimationFrame(loop)
+}
+
+loop();
