@@ -72,15 +72,15 @@ class Ball {
 
 const balls = []
 
-while (balls.length < 10) {
-    const size = random(10, 20);
+while (balls.length < 250) {
+    const size = random(1, 10);
     const ball = new Ball(
         //we gonna add size to zero becuase the ball start in the screen not outside it that is exactly for width too
         random(0 + size, width - size), //x-coordinate
         random(0 + size, height - size),// y-cordinate
         // now we want to determine the speed and becarfull not start with 0 cause it makes it no move at all
-        random(1, 4),// vel-x 
-        random(1, 4),//vel-Y
+        random(-4, 4),// vel-x 
+        random(-4, 4),//vel-Y
         randomRGB(),//Assign color
         size
     )
